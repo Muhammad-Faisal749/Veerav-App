@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:swooshed_app/controller/loginProvider/login_provider.dart';
 
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
 import 'package:swooshed_app/utils/app_images/app_images.dart';
@@ -54,8 +56,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<LoginProvider>(context, listen: false);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: Form(
@@ -81,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 100.w,
                     height: 90.h,
                   ),
+
                   ///Welcome Back Text
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -176,9 +185,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   ///Sign in button
-                  CustomButton(
-                    onPressed: _validateForm,
-                    text: AppLocalizations.of(context)!.sign_in,
+                  Consumer<LoginProvider>(
+                    builder: (context, getLoginProvider, child) {
+                      return  CustomButton(
+                              // _validateForm
+                              onPressed: () {
+                                _validateForm();
+                                getLoginProvider.getLoginMethod(
+                                    email: _usernameController.text.trim(),
+                                    password: _passwordController.text.trim());
+                              },
+                        loading: getLoginProvider.isLoading,
+                              text: AppLocalizations.of(context)!.sign_in,
+                            );
+                    },
                   ),
                   CustomSizedBox(
                     height: 32.h,

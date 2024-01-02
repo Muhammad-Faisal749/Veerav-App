@@ -47,4 +47,9 @@ class AppTexts {
   static String successText =
       'Thank you for filling the details and do the payment, we will proceed with your authentication process';
 
+
+
+  /// User Tokens Saving
+static String tokenKey = 'token';
+static String userToken = '';
 }

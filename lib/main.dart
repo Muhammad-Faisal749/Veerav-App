@@ -4,10 +4,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:swooshed_app/controller/brand_provider/brand_provider.dart';
+import 'package:swooshed_app/controller/home_provider/home_provider.dart';
+import 'package:swooshed_app/controller/signupProvider/signupProvider.dart';
 import 'package:swooshed_app/controller/translation_controller/translation_controller.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'controller/all_categories_provider/all_categories_provider.dart';
+import 'controller/loginProvider/login_provider.dart';
 import 'controller/payment_method_provider2/payment_method_provider.dart';
 import 'view/SplashScreen/splashscreen.dart';
 import 'view/bottom_nav_bar/nav_bar.dart';
@@ -45,6 +50,11 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (_) => LanguageChangeController()),
             ChangeNotifierProvider(create: (_) => PaymentMethodProvider()),
+            ChangeNotifierProvider(create: (_) => LoginProvider()),
+            ChangeNotifierProvider(create: (_) => SignUpProvider()),
+            ChangeNotifierProvider(create: (_) => HomeProvider()),
+            ChangeNotifierProvider(create: (_) => AllCategoriesProvider()),
+            ChangeNotifierProvider(create: (_) => ChooseBrandProvider()),
           ],
           child: Consumer<LanguageChangeController>(
               builder: (context, provider, child) {

@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:swooshed_app/controller/signupProvider/signupProvider.dart';
 import 'dart:io';
 
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
@@ -338,12 +340,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
 
                     ///SignUp Button
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 29.w),
-                      child: CustomButton(
-                        onPressed: _onSignUpClick,
-                        text: AppLocalizations.of(context)!.sign_up,
-                      ),
+                    Consumer<SignUpProvider>(
+                      builder: (context, getSignUpProvider, child) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 29.w),
+                          child: CustomButton(
+                            onPressed: () {
+                              _onSignUpClick();
+                              getSignUpProvider.getSignUpMethod(
+                                name: nameController!.text.trim(),
+                                userName: userNameController!.text.trim(),
+                                email: emailController!.text.trim(),
+                                phoneNo: phoneNumberController!.text.trim(),
+                                password: passwordController!.text.trim(),
+                                image: _pickedImage.toString(),
+                                // image: _pickedImage!.path.toString()
+                              );
+                            },
+                            loading: getSignUpProvider.isLoading,
+                            text: AppLocalizations.of(context)!.sign_up,
+                          ),
+                        );
+                      },
                     ),
                     CustomSizedBox(
                       height: 32.h,

@@ -15,13 +15,13 @@ class TextForm extends StatelessWidget {
 
   TextForm(
       {this.hintText,
-        this.prefixIcon,
-        this.controller,
-        this.onChanged,
-        this.validator, // Validator function
-        this.onSaved,
-        this.keyboardType,
-        super.key});
+      this.prefixIcon,
+      this.controller,
+      this.onChanged,
+      this.validator, // Validator function
+      this.onSaved,
+      this.keyboardType,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,8 @@ class TextForm extends StatelessWidget {
           hintText: hintText,
           fillColor: Colors.white,
           filled: true,
-          hintStyle: AppTextStyles.fontSize14to400.copyWith(color: AppColors.bgColor),
+          hintStyle:
+              AppTextStyles.fontSize14to400.copyWith(color: AppColors.bgColor),
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,

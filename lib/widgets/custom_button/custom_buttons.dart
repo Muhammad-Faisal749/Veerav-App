@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle? style;
   double? height;
   double? width;
+  bool? loading = false;
 
   CustomButton(
       {super.key,
@@ -20,6 +21,7 @@ class CustomButton extends StatelessWidget {
       this.onPressed,
       this.borderRadius,
       this.height = 50,
+        this.loading,
       this.width});
 
   @override
@@ -38,7 +40,9 @@ class CustomButton extends StatelessWidget {
 
         ),
         child: Center(
-          child: CustomText(
+          child:
+          loading == true?CircularProgressIndicator():
+          CustomText(
             text: text,
             style: AppTextStyles.fontSize17to600.copyWith(color: AppColors.bgColor),
           ),

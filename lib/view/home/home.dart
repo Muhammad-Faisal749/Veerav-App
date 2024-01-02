@@ -16,7 +16,6 @@ import 'check_results_components/check_results_components.dart';
 
 import 'homePageView/homePageView.dart';
 
-
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
@@ -52,10 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32.r),
                 child: CustomText(
-
                   text: AppLocalizations.of(context)!.categories,
-            style: AppTextStyles.fontSize14to700
-                .copyWith(color: AppColors.textColor),
+                  style: AppTextStyles.fontSize14to700
+                      .copyWith(color: AppColors.textColor),
                 ),
               ),
 
@@ -65,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32.r),
-                child: const CategoriesComponents(),
+                child:  CategoriesComponents(),
               ),
 
               CustomSizedBox(
@@ -76,11 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32.r),
                 child: CustomText(
-
                   text: AppLocalizations.of(context)!.check_result,
-            style: AppTextStyles.fontSize14to700
-                .copyWith(color: AppColors.textColor),
-
+                  style: AppTextStyles.fontSize14to700
+                      .copyWith(color: AppColors.textColor),
                 ),
               ),
 
