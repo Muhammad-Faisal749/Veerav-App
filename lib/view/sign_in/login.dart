@@ -224,6 +224,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       ///facebook Image
                       SocialComponent(
+                        onTap: (){
+
+                        },
                         image: AppImages.facebookLogo,
                       ),
                     ],

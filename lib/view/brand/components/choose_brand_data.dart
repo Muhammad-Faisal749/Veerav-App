@@ -10,7 +10,6 @@ import '../../../Model/brand_model/brand_model.dart';
 import '../../../controller/brand_provider/brand_provider.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../widgets/custom_container/custom_container.dart';
-import '../../../widgets/custom_image/custom_image.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 
 class ChooseBrandData extends StatefulWidget {
@@ -28,7 +27,6 @@ class _ChooseBrandDataState extends State<ChooseBrandData> {
 
   @override
   Widget build(BuildContext context) {
-    final _brandData = getData(context);
 
     return Consumer<ChooseBrandProvider>(
       builder: (context, getChooseBrandProvider, child) {
@@ -47,7 +45,7 @@ class _ChooseBrandDataState extends State<ChooseBrandData> {
                           SharedPreferences sp =
                               await SharedPreferences.getInstance();
                           sp.setString(
-                              "",
+                              "valueBrands",
                               getChooseBrandProvider
                                   .myBrandList[0].brand![index].sId
                                   .toString());

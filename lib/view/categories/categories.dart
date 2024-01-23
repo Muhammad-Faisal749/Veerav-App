@@ -251,7 +251,6 @@ class _CategoriesState extends State<Categories> {
                         message: "Please Select Category", error: true);
                   } else {
                     print("********************TOAST FAILED***************");
-
                     AppTexts.flutterToast(message: "Success", error: true);
                     Navigator.push(
                       context,

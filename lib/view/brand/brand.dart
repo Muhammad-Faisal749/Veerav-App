@@ -76,19 +76,23 @@ class _BrandState extends State<Brand> {
               SizedBox(height: 20.h),
 
               ///Text Form Field
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 21.w),
-                child: TextForm(
-                  controller: _searchController,
-                  // onChanged: ,
-                  hintText: AppLocalizations.of(context)!.search,
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: AppColors.bgColor,
-                    size: 20,
-                  ),
-                ),
-              ),
+             Consumer<ChooseBrandProvider>(builder: (context, chooseBrandProvider, child) {
+               return  Padding(
+                 padding: EdgeInsets.symmetric(horizontal: 21.w),
+                 child: TextForm(
+                   controller: _searchController,
+                   onChanged: (value) {
+                     chooseBrandProvider.filterBrands(value);
+                   },
+                   hintText: AppLocalizations.of(context)!.search,
+                   prefixIcon: Icon(
+                     Icons.search,
+                     color: AppColors.bgColor,
+                     size: 20,
+                   ),
+                 ),
+               );
+             },),
               SizedBox(height: 10.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -106,13 +110,17 @@ class _BrandState extends State<Brand> {
                 text: AppLocalizations.of(context)!.next,
                 onPressed: () {
                   if (value.currentIndex == -1) {
-                    print("********************TOAST SUCCESS***************");
+                    print("******************** TOAST SUCCESS ***************");
                     AppTexts.flutterToast(
                         message: "Please Select Brand Category", error: true);
                   } else {
-                    print("********************TOAST FAILED***************");
+                    print(
+                        "******************** TOAST FAILED *******************");
 
-                    AppTexts.flutterToast(message: "Success", error: true);
+                    AppTexts.flutterToast(
+                      message: "Success",
+                      error: true,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(

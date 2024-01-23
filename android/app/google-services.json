@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "24700300548",
+    "project_id": "veerav-app",
+    "storage_bucket": "veerav-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24700300548:android:18492858e1db0d35c33451",
+        "android_client_info": {
+          "package_name": "com.alrighttech.veerev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8EUEuECh7nkaxpcTIWY8Kf0aE74uvNTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24700300548:android:8309f44953b28f3cc33451",
+        "android_client_info": {
+          "package_name": "com.example.swooshed_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8EUEuECh7nkaxpcTIWY8Kf0aE74uvNTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
