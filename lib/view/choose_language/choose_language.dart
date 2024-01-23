@@ -21,8 +21,6 @@ class ChooseLanguageScreen extends StatefulWidget {
 }
 
 class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,11 +37,13 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
               CustomSizedBox(
                 height: 76.h,
               ),
+
               ///Language Text
               CustomText(
                 text: AppLocalizations.of(context)!.language,
                 style: AppTextStyles.heading1,
               ),
+
               ///Choose Language Text
 
               CustomText(
@@ -64,54 +64,53 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                   itemCount: languageLists.length,
                   itemBuilder: (context, index) {
                     return Consumer<LanguageChangeController>(
-                     builder: (context, Provider, child){
-                        return GestureDetector(
-                          onTap: () {
-                            Provider.setCurrent(index);
-                        Provider.changeLanguage(
-                        Locale(TranslationList[index].languageName));
-                          },
-                          child: Container(
-                            // width: 326,
-                            height: 48.h,
-                            // color: AppColors.textColor,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 14.h),
-                            margin: EdgeInsets.only(bottom: 8.r),
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              color: Provider.current == index
-                                  ? AppColors.textColorGrey
-                                  : AppColors.textColor,
-                              borderRadius: BorderRadius.circular(4),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                CountryFlag.fromCountryCode(
-                                  languageLists[index].flagName,
-                                  height: 22.h,
-                                  width: 18.w,
-                                ),
-                                CustomSizedBox(width: 10),
-                                CustomText(
-                                    text: languageLists[index].languageName,
-                                    style: AppTextStyles.fontSize14to400
-                                        .copyWith(fontWeight: FontWeight.w500,color: AppColors.bgColor)),
-                              ],
-                            ),
+                        builder: (context, Provider, child) {
+                      return GestureDetector(
+                        onTap: () {
+                          Provider.setCurrent(index);
+                          Provider.changeLanguage(
+                              Locale(TranslationList[index].languageName));
+                        },
+                        child: Container(
+                          // width: 326,
+                          height: 48.h,
+                          // color: AppColors.textColor,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 14.h),
+                          margin: EdgeInsets.only(bottom: 8.r),
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: Provider.current == index
+                                ? AppColors.textColorGrey
+                                : AppColors.textColor,
+                            borderRadius: BorderRadius.circular(4),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x3F000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              ),
+                            ],
                           ),
-                        );
-                      }
-                    );
-
+                          child: Row(
+                            children: [
+                              CountryFlag.fromCountryCode(
+                                languageLists[index].flagName,
+                                height: 22.h,
+                                width: 18.w,
+                              ),
+                              CustomSizedBox(width: 10),
+                              CustomText(
+                                  text: languageLists[index].languageName,
+                                  style: AppTextStyles.fontSize14to400.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.bgColor)),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
                   },
                 ),
               ),

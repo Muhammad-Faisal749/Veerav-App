@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swooshed_app/controller/loginProvider/login_provider.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
 import 'package:swooshed_app/utils/app_constants/app_constant.dart';
 import 'package:swooshed_app/utils/app_images/app_images.dart';
@@ -10,6 +11,7 @@ import '../bottom_nav_bar/nav_bar.dart';
 import '../choose_language/choose_language.dart';
 
 class SplashScreen extends StatefulWidget {
+  // String userId;
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -24,6 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void isLogin() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     AppTexts.userToken = sp.getString(AppTexts.tokenKey) ?? "";
+    LoginProvider.userId = sp.getString(LoginProvider.idKey) ?? "";
+    print("********************** User ID is ${LoginProvider.userId} *****************");
     if (AppTexts.userToken.isNotEmpty) {
       Future.delayed(Duration(seconds: 3), () {
         Navigator.of(context).pushReplacement(

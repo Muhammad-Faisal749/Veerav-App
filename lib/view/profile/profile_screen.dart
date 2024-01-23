@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
+import 'package:swooshed_app/utils/app_constants/app_constant.dart';
 import 'package:swooshed_app/utils/app_images/app_images.dart';
+import 'package:swooshed_app/utils/app_styles/app_text_styles.dart';
 import 'package:swooshed_app/view/profile/about_us/about_us.dart';
 import 'package:swooshed_app/view/profile/components/language_screen_select.dart';
 import 'package:swooshed_app/view/profile/components/row_widget.dart';
@@ -10,6 +13,8 @@ import 'package:swooshed_app/view/profile/contact_us/contact_us.dart';
 import 'package:swooshed_app/view/profile/faq_screen/faq_screen.dart';
 import 'package:swooshed_app/view/profile/setting/setting_screen.dart';
 import 'package:swooshed_app/view/profile/share_app/share_app.dart';
+import 'package:swooshed_app/view/sign_in/login.dart';
+import 'package:swooshed_app/widgets/custom_text/custom_text.dart';
 import 'components/profile_header_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -109,6 +114,37 @@ class ProfileScreen extends StatelessWidget {
                       preffix: AppImages.profileSetting,
                       text: AppLocalizations.of(context)!.setting,
                     ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                 GestureDetector(
+                   onTap: () async{
+                     SharedPreferences sp = await SharedPreferences.getInstance();
+                     // sp.getString(AppTexts.userToken);
+                     sp.remove(AppTexts.tokenKey);
+                     Get.to(()=>LoginScreen());
+                   },
+                   child: Container(
+                     width: double.infinity,
+                     height: 46.h,
+                     decoration: BoxDecoration(
+                       color: Colors.white,
+                       borderRadius: BorderRadius.circular(5)
+                     ),
+                     child: Padding(
+                       padding: const EdgeInsets.only(left: 15),
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                         children: [
+                           Icon(Icons.logout,size: 25,),
+                           SizedBox(width: 10,),
+                           CustomText(text: "Logout",style: AppTextStyles.fontSize14to700,)
+                         ],
+                       ),
+                     ),
+                   ),
+                 )
                   ],
                 ),
               ],

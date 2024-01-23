@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swooshed_app/utils/app_constants/app_constant.dart';
 import 'package:swooshed_app/utils/app_styles/app_text_styles.dart';
 import 'package:swooshed_app/utils/app_urls/app_urls.dart';
 import '../../controller/all_categories_provider/all_categories_provider.dart';
@@ -11,11 +13,9 @@ import '../../widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_button/custom_buttons.dart';
 import '../../widgets/custom_container/custom_container.dart';
-import '../../widgets/custom_image/custom_image.dart';
 import '../../widgets/custom_text/custom_text.dart';
 import '../brand/brand.dart';
 
-// ignore: must_be_immutable
 class Categories extends StatefulWidget {
   @override
   State<Categories> createState() => _CategoriesState();
@@ -56,6 +56,7 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     final _category = _categorys(context);
+
     return Scaffold(
       ///App Bar
       appBar: AppBar(
@@ -89,8 +90,9 @@ class _CategoriesState extends State<Categories> {
       body: Consumer<AllCategoriesProvider>(
         builder: (context, getChooseCategory, child) {
           var chooseData = getChooseCategory.myCategoriesList[0];
+
           return SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            // physics: BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 10.w,
@@ -101,82 +103,132 @@ class _CategoriesState extends State<Categories> {
                 children: [
                   ///Categories List
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.w),
-                    // padding: EdgeInsets.zero,
-                    child: SizedBox(
-                        height: 470.h,
-                        child: getChooseCategory.myCategoriesList.length != 0
-                        ? getChooseCategory.myCategoriesList[0].categories!.length != 0 ?
-                        ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                itemCount: getChooseCategory
-                                    .myCategoriesList[0].categories!.length,
-                                // shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return CustomContainer(
-                                    margin: EdgeInsets.only(bottom: 6.h),
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.h),
-                                    // height: 70.h,
-                                    width: MediaQuery.of(context).size.width,
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    // gradient: AppColors.mediumGradient,
-                                    child: Align(
-                                      child: ListTile(
-                                        // contentPadding: EdgeInsets.symmetric(
-                                        //     horizontal: 12.w, vertical: 10.h),
-                                        leading: Padding(
-                                          padding: EdgeInsets.all(2.r),
-                                          child: Container(
-                                            // height: 50.w,
-                                            width: 50.h,
+                      padding: EdgeInsets.symmetric(horizontal: 30.w),
+                      // padding: EdgeInsets.zero,
+                      child: SizedBox(
+                          height: 470.h,
+                          child: getChooseCategory.myCategoriesList.length != 0
+                              ? getChooseCategory.myCategoriesList[0]
+                                          .categories!.length !=
+                                      0
+                                  ? ListView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      itemCount: getChooseCategory
+                                          .myCategoriesList[0]
+                                          .categories!
+                                          .length,
+                                      // shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () async {
+                                            getChooseCategory
+                                                .selectedIndex(index);
+                                            SharedPreferences sp =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            sp.setString(
+                                                'GetCategoryById',
+                                                getChooseCategory
+                                                    .myCategoriesList[0]
+                                                    .categories![index]
+                                                    .sId
+                                                    .toString());
+                                            sp.get('GetCategoryById');
+                                            print(
+                                                "*********** Category Index is == ${index} ************** ");
+                                            print(
+                                                "****************category _id Is ===== ${getChooseCategory.myCategoriesList[0].categories![index].sId} **********************");
+                                          },
+                                          child: CustomContainer(
+                                            color: getChooseCategory
+                                                        .currentIndex ==
+                                                    index
+                                                ? Colors.greenAccent
+                                                : Colors.white,
+                                            margin:
+                                                EdgeInsets.only(bottom: 6.h),
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 10.h),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.textColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: AppColors.bgColor
-                                                      .withOpacity(0.2),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 5,
-                                                  offset: Offset(0, 3),
+                                            // height: 70.h,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            borderRadius:
+                                                BorderRadius.circular(10.r),
+                                            // gradient: AppColors.mediumGradient,
+                                            child: Align(
+                                              child: ListTile(
+                                                // contentPadding: EdgeInsets.symmetric(
+                                                //     horizontal: 12.w, vertical: 10.h),
+                                                leading: Padding(
+                                                  padding: EdgeInsets.all(2.r),
+                                                  child: Container(
+                                                    // height: 50.w,
+                                                    width: 50.h,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10.h),
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          AppColors.textColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.r),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: AppColors
+                                                              .bgColor
+                                                              .withOpacity(0.2),
+                                                          spreadRadius: 2,
+                                                          blurRadius: 5,
+                                                          offset: Offset(0, 3),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Center(
+                                                      child: Image.network(
+                                                        AppUrls.imageUrl +
+                                                            chooseData
+                                                                .categories![
+                                                                    index]
+                                                                .image
+                                                                .toString(),
+                                                        color: Colors.black,
+                                                        width: 30,
+                                                        height: 30,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ],
-                                            ),
-                                            child: Center(
-                                              child: Image.network(
-                                                AppUrls.imageUrl +
-                                                    chooseData
-                                                        .categories![index]
-                                                        .image
-                                                        .toString(),
-                                                color: Colors.black,
-                                                width: 30,
-                                                height: 30,
+                                                title: CustomText(
+                                                  textAlign: TextAlign.start,
+                                                  text: chooseData
+                                                      .categories![index].name
+                                                      .toString(),
+                                                  style: AppTextStyles
+                                                      .fontSize18to700
+                                                      .copyWith(
+                                                    fontSize: 17,
+                                                    color: getChooseCategory
+                                                                .currentIndex ==
+                                                            index
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        title: CustomText(
-                                          textAlign: TextAlign.start,
-                                          text: chooseData
-                                              .categories![index].name
-                                              .toString(),
-                                          style: AppTextStyles.fontSize18to700
-                                              .copyWith(
-                                                  fontSize: 17,
-                                                  color: AppColors.bgColor),
-                                        ),
+                                        );
+                                      },
+                                    )
+                                  : Center(
+                                      child: Text(
+                                        "No Data Found",
+                                        style: TextStyle(color: Colors.white),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ) : Center(child: Text("No Data Found",style: TextStyle(color: Colors.white),),)
-                            : CircularProgressIndicator())
-                  ),
+                                    )
+                              : CircularProgressIndicator())),
                 ],
               ),
             ),
@@ -185,20 +237,33 @@ class _CategoriesState extends State<Categories> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 34.h),
-        child: Container(
-          height: 50.h,
-          margin: EdgeInsets.only(bottom: 30.w),
-          child: CustomButton(
-            text: AppLocalizations.of(context)!.next,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Brand(),
-                ),
-              );
-            },
-          ),
+        child: Consumer<AllCategoriesProvider>(
+          builder: (context, allCategoriesProvider, child) {
+            return Container(
+              height: 50.h,
+              margin: EdgeInsets.only(bottom: 30.w),
+              child: CustomButton(
+                text: AppLocalizations.of(context)!.next,
+                onPressed: () {
+                  if (allCategoriesProvider.currentIndex == -1) {
+                    print("********************TOAST SUCCESS***************");
+                    AppTexts.flutterToast(
+                        message: "Please Select Category", error: true);
+                  } else {
+                    print("********************TOAST FAILED***************");
+
+                    AppTexts.flutterToast(message: "Success", error: true);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Brand(),
+                      ),
+                    );
+                  }
+                },
+              ),
+            );
+          },
         ),
       ),
     );

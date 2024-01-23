@@ -10,6 +10,15 @@ import '../../Model/active_poster_model/active_poster_model.dart';
 import 'package:http/http.dart' as http;
 
 class ChooseBrandProvider extends ChangeNotifier {
+  int _currentIndex = -1;
+
+  int get currentIndex => _currentIndex;
+
+
+  void selectedIndex(int index){
+    _currentIndex = index;
+    notifyListeners();
+  }
   List<ChooseBrandModel> myBrandList = [];
 
   Future<void> getAllBrands() async {

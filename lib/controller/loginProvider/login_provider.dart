@@ -20,7 +20,9 @@ class LoginProvider extends ChangeNotifier {
   List<LoginModel> myLoginList = [];
 
   bool get isLoading => _isLoading;
-
+static var userId;
+static var saveId;
+static String idKey = "idKey";
   ///Function for Circular Progress Indicator
 
   void setLoading(bool value) {
@@ -40,7 +42,7 @@ class LoginProvider extends ChangeNotifier {
       // 'Content-Type: application/json';
     });
 
-    print("************** $response******************");
+    print("************** $response ******************");
 
     var data = jsonDecode(response.body.toString());
     print("*****************$data******************");
@@ -57,22 +59,27 @@ class LoginProvider extends ChangeNotifier {
               style:
                   AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
             )));
+
         ///Saving User Token
         AppTexts.userToken = myLoginList[0].jwtToken.toString();
         SharedPreferences sp = await SharedPreferences.getInstance();
         sp.setString(AppTexts.tokenKey, data['jwtToken']);
 
-
-
+        /// Saving User Id
+        // userId = sp.setString(idKey ,data['_id']);
+        userId = myLoginList[0].sId.toString();
+        saveId = sp.setString(idKey, data['_id']);
+        print("*****************  bnmk,l.l,kmjnhbgv ID = $userId *******************");
+        print("*****************  SAVED USER ID  = $saveId *******************");
         Get.offAll(() => BottomNav());
       } else {
         print("ERROR");
-        ScaffoldMessenger.of(Get.context!).showSnackBar( SnackBar(
+        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
             backgroundColor: Colors.redAccent,
             content: CustomText(
               text: "Invalid email and Password",
               style:
-              AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
+                  AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
             )));
         setLoading(false);
       }

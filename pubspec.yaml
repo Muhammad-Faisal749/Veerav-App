@@ -59,7 +59,10 @@ dependencies:
   assets_audio_player: ^3.1.1
   audioplayers: 5.2.0
   flutter_credit_card:
-
+  flutter_paypal: ^0.2.0
+  firebase_messaging: ^14.7.10
+  firebase_core: ^2.24.2
+  fluttertoast: ^8.2.4
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
