@@ -60,9 +60,14 @@ dependencies:
   audioplayers: 5.2.0
   flutter_credit_card:
   flutter_paypal: ^0.2.0
+  fluttertoast: ^8.2.4
+  shimmer: ^3.0.0
+  google_sign_in: ^6.2.1
+#  FireBase Packages
+  firebase_auth: ^4.16.0
   firebase_messaging: ^14.7.10
   firebase_core: ^2.24.2
-  fluttertoast: ^8.2.4
+  flutter_spinkit: ^5.2.0
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:

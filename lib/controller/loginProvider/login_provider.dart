@@ -20,9 +20,10 @@ class LoginProvider extends ChangeNotifier {
   List<LoginModel> myLoginList = [];
 
   bool get isLoading => _isLoading;
-static var userId;
-static var saveId;
-static String idKey = "idKey";
+  static var userId;
+  static var saveId;
+  static String idKey = "idKey";
+
   ///Function for Circular Progress Indicator
 
   void setLoading(bool value) {
@@ -69,8 +70,10 @@ static String idKey = "idKey";
         // userId = sp.setString(idKey ,data['_id']);
         userId = myLoginList[0].sId.toString();
         saveId = sp.setString(idKey, data['_id']);
-        print("*****************  bnmk,l.l,kmjnhbgv ID = $userId *******************");
-        print("*****************  SAVED USER ID  = $saveId *******************");
+        print(
+            "*****************  bnmk,l.l,kmjnhbgv ID = $userId *******************");
+        print(
+            "*****************  SAVED USER ID  = $saveId *******************");
         Get.offAll(() => BottomNav());
       } else {
         print("ERROR");

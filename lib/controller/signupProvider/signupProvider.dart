@@ -1,22 +1,32 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:swooshed_app/utils/app_urls/app_urls.dart';
+import 'package:swooshed_app/view/sign_in/login.dart';
 
 class SignUpProvider extends ChangeNotifier {
   bool _isLoading = false;
+  XFile? _pickedImage;
 
-  // List<SignUpModel> mySignUpList = [];
+  XFile? get pickedImage => _pickedImage;
 
   bool get isLoading => _isLoading;
 
-  ///Function for Circular Progress Indicator
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      _pickedImage = pickedImage;
+      notifyListeners();
+    }
+  }
 
   void setLoading(bool value) {
     _isLoading = value;
-    print("$value");
     notifyListeners();
   }
 
@@ -26,92 +36,41 @@ class SignUpProvider extends ChangeNotifier {
     required String email,
     required String phoneNo,
     required String password,
-    required String image
   }) async {
     setLoading(true);
 
-    var url = Uri.parse(AppUrls.baseUrl + AppUrls.signupEndPoint);
-    var request = http.MultipartRequest('POST', url);
-    request.fields.addAll({
-      'name': name,
-      'userName': userName,
-      'email': email,
-      'phoneNumber': phoneNo,
-      'password': password,
-      // 'image':image.toString(),
-    });
-    // request.files.add(http.MultipartFile(
-    //   'image',
-    //   http.ByteStream(image),
-    //   await image.size,
-    //   filename: basename(image.path),
-    // ));
-
-    var response = await request.send();
-    var data = await response.stream.bytesToString();
-    // var response = await http.post(url, body: {
-    //   'name': name,
-    //   'userName':userName,
-    //   'email':email,
-    //   'phoneNumber':phoneNo,
-    //   'password':password,
-    //   'image':image
-    // }, headers: {
-    //   // 'Content-Type: application/json';
-    // });
-
-    print("**************-- $request --******************");
-
-    // var data = jsonDecode(request.body.toString());
-    print("*****************$data******************");
-
     try {
-      // if (response.statusCode == 200) {
-      //   // mySignUpList.add(SignUpModel.fromJson(data));
-      //   // request.fields.addAll(other)
-      //
-      //   print("*************** SUCCESS *******************");
-      //   setLoading(false);
-      //   ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-      //       backgroundColor: Colors.green,
-      //       content: CustomText(
-      //         text: "SUCCESS",
-      //         style:
-      //             AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
-      //       )));
-      //   Get.offAll(() => LoginScreen());
-      // } else {
-      //   print("ERROR");
-      //   ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-      //       backgroundColor: Colors.redAccent,
-      //       content: CustomText(
-      //         text: "Failed",
-      //         style:
-      //             AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
-      //       )));
-      //   setLoading(false);
-      // }
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('http://161.97.129.139:5001/api/user/signup'));
+      var url = Uri.parse(AppUrls.baseUrl + AppUrls.signupEndPoint);
+
+      var request = http.MultipartRequest('POST', url);
       request.fields.addAll({
         'name': name,
         'userName': userName,
         'email': email,
         'phoneNumber': phoneNo,
-        'password': password
+        'password': password,
       });
       request.files.add(await http.MultipartFile.fromPath(
-          'image', image.toString()));
+          'image', _pickedImage!.path.toString()));
 
       http.StreamedResponse response = await request.send();
+      var geer = await http.Response.fromStream(response);
+      Map<String, dynamic> map = jsonDecode(geer.body);
 
       if (response.statusCode == 200) {
+        print('********************** ${map['message']} *****************************************');
+        print('**************** SIGNUP Success ********************');
         print(await response.stream.bytesToString());
+        setLoading(false);
+        Get.to(() => LoginScreen());
       } else {
-        print(response.reasonPhrase);
+        setLoading(false);
+        print('**************** FAILED  ${map['message']} ********************');
       }
     } catch (e) {
-      e.toString();
+      setLoading(false);
+      print('**************** FAILED catech $e ********************');
+      print(e.toString());
     }
   }
 }

@@ -3,13 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:swooshed_app/controller/all_categories_provider/all_categories_provider.dart';
-import 'package:swooshed_app/model/home_categories_model/categories_model.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
 import 'package:swooshed_app/utils/app_styles/app_text_styles.dart';
 import 'package:swooshed_app/widgets/custom_sized_box/custom_sized_box.dart';
 import '../../model/home_categories_model/categories_model.dart';
-import '../../model/home_categories_model/categories_model.dart';
-import '../../utils/app_images/app_images.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_text/custom_text.dart';
 import 'catergories_components/categories_components.dart';
@@ -25,25 +22,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isShown = false;
   TextEditingController SearchController = TextEditingController();
 
   // HomeModel activeSearchBar = HomeModel();
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AllCategoriesProvider>(context,listen: false).getAllCategories();
+    Provider.of<AllCategoriesProvider>(context, listen: false)
+        .getAllCategories();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: (){
-            return Provider.of<AllCategoriesProvider>(context,listen: false).getAllCategories();
+          onRefresh: () async {
+            await Provider.of<AllCategoriesProvider>(context, listen: false)
+                .getAllCategories();
+
+            // return true;
           },
           child: SingleChildScrollView(
             child: Column(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 32.r),
-                  child:  CategoriesComponents(),
+                  child: CategoriesComponents(),
                 ),
 
                 CustomSizedBox(
@@ -93,11 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 CustomSizedBox(
                   height: 32.h,
                 ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32.r),
-                  child: const CheckResultsComponents(),
-                )
+                //
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 32.r),
+                //   child: const CheckResultsComponents(),
+                // )
               ],
             ),
           ),

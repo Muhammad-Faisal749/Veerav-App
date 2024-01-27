@@ -12,7 +12,20 @@
           "package_name": "com.alrighttech.veerev"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "24700300548-h0pi994h66emgl2s1qpm62s4rjqlc0tk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alrighttech.veerev",
+            "certificate_hash": "649161d887ddfec87cfff792b383efc9270743d6"
+          }
+        },
+        {
+          "client_id": "24700300548-8g9oupag8sgt2c6s27bf6qfsonvmdaoe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA8EUEuECh7nkaxpcTIWY8Kf0aE74uvNTU"
@@ -20,26 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:24700300548:android:8309f44953b28f3cc33451",
-        "android_client_info": {
-          "package_name": "com.example.swooshed_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA8EUEuECh7nkaxpcTIWY8Kf0aE74uvNTU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24700300548-8g9oupag8sgt2c6s27bf6qfsonvmdaoe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "24700300548-83nkgf9rli5oondt2g6johp0v0eurv1g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.swooshedApp"
+              }
+            }
+          ]
         }
       }
     }

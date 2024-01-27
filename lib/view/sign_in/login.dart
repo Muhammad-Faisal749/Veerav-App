@@ -8,10 +8,13 @@ import 'package:swooshed_app/controller/loginProvider/login_provider.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
 import 'package:swooshed_app/utils/app_images/app_images.dart';
 import 'package:swooshed_app/utils/app_styles/app_text_styles.dart';
+import 'package:swooshed_app/view/bottom_nav_bar/nav_bar.dart';
+import 'package:swooshed_app/view/home/home.dart';
 import 'package:swooshed_app/widgets/custom_button/custom_buttons.dart';
 import 'package:swooshed_app/widgets/custom_sized_box/custom_sized_box.dart';
 import 'package:swooshed_app/widgets/custom_text/custom_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../controller/signin_with_google/signin_with_google.dart';
 import '../../widgets/custom_text_form_field/custom_text_field.dart';
 import '../not_login/not_login_component/sign_in_component.dart';
 import '../not_login/social_component/social_component.dart';
@@ -187,17 +190,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ///Sign in button
                   Consumer<LoginProvider>(
                     builder: (context, getLoginProvider, child) {
-                      return  CustomButton(
-                              // _validateForm
-                              onPressed: () {
-                                _validateForm();
-                                getLoginProvider.getLoginMethod(
-                                    email: _usernameController.text.trim(),
-                                    password: _passwordController.text.trim());
-                              },
+                      return CustomButton(
+                        // _validateForm
+                        onPressed: () {
+                          _validateForm();
+                          getLoginProvider.getLoginMethod(
+                              email: _usernameController.text.trim(),
+                              password: _passwordController.text.trim());
+                        },
                         loading: getLoginProvider.isLoading,
-                              text: AppLocalizations.of(context)!.sign_in,
-                            );
+                        text: AppLocalizations.of(context)!.sign_in,
+                      );
                     },
                   ),
                   CustomSizedBox(
@@ -216,6 +219,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       ///google Image
                       SocialComponent(
+                        onTap: () {
+                          Provider.of<SocialMediaLoginProvider>(context,
+                                  listen: false)
+                              .signInWithGoogle(
+                                  context: context, authType: "GOOGLE");
+                        },
                         image: AppImages.googleLogo,
                       ),
                       CustomSizedBox(
@@ -224,9 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       ///facebook Image
                       SocialComponent(
-                        onTap: (){
-
-                        },
+                        onTap: () {},
                         image: AppImages.facebookLogo,
                       ),
                     ],

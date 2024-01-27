@@ -26,10 +26,9 @@ class ChooseBrandProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateSearch(){
-    if(searchingList.isEmpty){
-
-    }else{}
+  updateSearch() {
+    if (searchingList.isEmpty) {
+    } else {}
   }
 
   Future<void> getAllBrands() async {

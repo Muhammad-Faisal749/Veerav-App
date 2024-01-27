@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AppTexts {
@@ -63,4 +64,17 @@ class AppTexts {
         timeInSecForIosWeb: 1,
         textColor: Colors.white);
   }
+
+  static spinKitCircle() => Center(
+        child: SpinKitFadingCircle(
+          size: 30,
+          color: Colors.pinkAccent,
+        ),
+      );
+  static spinKitAnimation() => Center(
+        child: SpinKitRotatingCircle(
+          size: 30,
+          color: Colors.pinkAccent,
+        ),
+      );
 }

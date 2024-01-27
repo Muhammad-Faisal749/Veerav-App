@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
+import 'package:swooshed_app/utils/app_constants/app_constant.dart';
 import 'package:swooshed_app/utils/app_styles/app_text_styles.dart';
 
 import '../custom_text/custom_text.dart';
@@ -41,7 +42,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Center(
           child:
-          loading == true?CircularProgressIndicator():
+          loading == true?AppTexts.spinKitCircle():
           CustomText(
             text: text,
             style: AppTextStyles.fontSize17to600.copyWith(color: AppColors.bgColor),

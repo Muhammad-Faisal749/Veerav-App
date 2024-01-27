@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,8 @@ import 'controller/check_result_provider/check_result_provider.dart';
 import 'controller/get_token_provider/get_token_provider.dart';
 import 'controller/loginProvider/login_provider.dart';
 import 'controller/payment_method_provider2/payment_method_provider.dart';
+import 'controller/signin_with_google/signin_with_google.dart';
+import 'firebase_options.dart';
 import 'view/SplashScreen/splashscreen.dart';
 import 'view/bottom_nav_bar/nav_bar.dart';
 import 'view/not_login/not_login.dart';
@@ -30,6 +33,9 @@ List<CameraDescription> cameras = [];
 Future<void> main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     cameras = await availableCameras();
   } on CameraException catch (e) {
     print('Error in fetching the cameras: $e');
@@ -58,7 +64,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (_) => ChooseBrandProvider()),
             ChangeNotifierProvider(create: (_) => GetTokenProvider()),
             ChangeNotifierProvider(create: (_) => CheckResultProvider()),
-            // ChangeNotifierProvider(create: (_) => GetCategoryProvider()),
+            ChangeNotifierProvider(create: (_) => SocialMediaLoginProvider()),
           ],
           child: Consumer<LanguageChangeController>(
               builder: (context, provider, child) {
