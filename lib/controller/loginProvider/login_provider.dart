@@ -32,62 +32,63 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getLoginMethod(
-      {required String email, required String password}) async {
+  Future<void> getLoginMethod({
+    required String email,
+    required String password,
+    // BuildContext context,
+  }) async {
     setLoading(true);
-    var url = Uri.parse(AppUrls.baseUrl + AppUrls.loginEndPoint);
-    var response = await http.post(url, body: {
-      "email": email,
-      "password": password,
-    }, headers: {
-      // 'Content-Type: application/json';
-    });
-
-    print("************** $response ******************");
-
-    var data = jsonDecode(response.body.toString());
-    print("*****************$data******************");
 
     try {
+      print(email);
+      print(password);
+      var url = Uri.parse(AppUrls.baseUrl + AppUrls.loginEndPoint);
+      var response = await http.post(url, body: {
+        "email":email,
+        "password":password
+      });
+
+      print("************** $response ******************");
+
+      var data = jsonDecode(response.body.toString());
+      print("***************** ${response.statusCode} ******************");
+      print("***************** ${response.body} ******************");
+  Map<String,dynamic> map = jsonDecode(response.body);
       if (response.statusCode == 200) {
         myLoginList.add(LoginModel.fromJson(data));
         print("*************** SUCCESS *******************");
         setLoading(false);
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-            backgroundColor: Colors.green,
-            content: CustomText(
-              text: "SUCCESS",
-              style:
-                  AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
-            )));
+
 
         ///Saving User Token
         AppTexts.userToken = myLoginList[0].jwtToken.toString();
         SharedPreferences sp = await SharedPreferences.getInstance();
         sp.setString(AppTexts.tokenKey, data['jwtToken']);
+        AppTexts.userType = myLoginList[0].role.toString();
 
         /// Saving User Id
-        // userId = sp.setString(idKey ,data['_id']);
         userId = myLoginList[0].sId.toString();
+
         saveId = sp.setString(idKey, data['_id']);
-        print(
-            "*****************  bnmk,l.l,kmjnhbgv ID = $userId *******************");
+        print("*****************  USER ID = $userId *******************");
         print(
             "*****************  SAVED USER ID  = $saveId *******************");
         Get.offAll(() => BottomNav());
       } else {
-        print("ERROR");
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-            backgroundColor: Colors.redAccent,
-            content: CustomText(
-              text: "Invalid email and Password",
-              style:
-                  AppTextStyles.fontSize14to700.copyWith(color: Colors.white),
-            )));
+        print("this is else  ${response.statusCode} in here ");
+        AppTexts.flutterToast(message: map['message'], error: true);
+        print(response.reasonPhrase);
         setLoading(false);
+
+
       }
+
+
     } catch (e) {
-      e.toString();
+      print("********************* EXCEPTION ***************************");
+      print(e.toString());
+
+      setLoading(false);
     }
   }
 }

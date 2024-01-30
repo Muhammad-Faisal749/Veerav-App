@@ -52,6 +52,8 @@ class AppTexts {
   /// User Tokens Saving
   static String tokenKey = 'token';
   static String userToken = '';
+  static String userType = '';
+  static String saveUserType = '';
 
   ///Toast
   static flutterToast({required String message, required bool error}) {

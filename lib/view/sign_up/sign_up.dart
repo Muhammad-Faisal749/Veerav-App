@@ -339,7 +339,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         // image: _pickedImage!.path.toString()
                                       );
                                     }
-                                    Get.to(() => LoginScreen());
+
 
                                   },
                                   loading: getSignUpProvider.isLoading,

@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (_formKey.currentState!.validate()) {
       // Validation passed, proceed with signing in
-      Get.toNamed('/BottomNav');
+
     }
   }
 
@@ -123,7 +123,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     onSaved: (value) => _username = value ?? '',
                     controller: _usernameController,
                     prefixIcon: SvgPicture.asset(AppImages.userNameIcon,
-                        color: AppColors.bgColor),
+                        colorFilter:
+                            ColorFilter.mode(Colors.black, BlendMode.srcIn)),
                     hintText: AppLocalizations.of(context)!.username,
                     validator: (value) {
                       if (value == null || value.isEmpty) {

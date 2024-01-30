@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:swooshed_app/controller/get_token_provider/get_token_provider.dart';
 import 'package:swooshed_app/utils/app_colors/app_colors.dart';
 import 'package:swooshed_app/utils/app_fonts/app_fonts.dart';
@@ -122,8 +123,31 @@ class _WalletScreenState extends State<WalletScreen> {
                               )
                                   : Text("Not Found")
 
-                                  : CircularProgressIndicator(
-                                color: Colors.orange,
+                                  : Shimmer.fromColors(
+                                baseColor: Colors.white,
+                                highlightColor: Colors.white70,
+                                child: RichText(
+                                  text: TextSpan(
+
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: "0",
+                                          style: AppTextStyles
+                                              .fontSize42to700),
+                                      TextSpan(
+                                        text: ' ', // Add a space here
+                                      ),
+                                      TextSpan(
+                                        text:
+                                        AppLocalizations.of(context)!
+                                            .tokens,
+                                        style: AppTextStyles
+                                            .fontSize42to700
+                                            .copyWith(fontSize: 20),
+                                      ),
+                                    ],
+                                  ),
+                                )
                               );
                             },
                           )
